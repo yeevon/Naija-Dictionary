@@ -19,6 +19,7 @@ def search_view(request):
     context = {'results': results}
     return render(request, 'naija_dict/page.html', context)
 
+
 def add_word_view(request):
     form = AddWordForm()
 
