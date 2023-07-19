@@ -1,18 +1,54 @@
 <!DOCTYPE html>
+{% load crispy_forms_tags %}
 {% load static %}
+
+
 <html>
 <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
+<!-- Display banner and header -->
 <div class="header">
-        <img src="{% static 'images/banner.jpg' %}" class="banner" alt="Page Banner">
-        <img src="{% static 'images/logo.png' %}" class="logo hover-image" alt="Page Logo">
+    <img src="{% static 'images/banner.jpg' %}" class="banner" alt="Page Banner">
+    <img src="{% static 'images/logo.png' %}" class="logo hover-image" alt="Page Logo">
 </div>
+
+<!-- Search dictionary -->
 <div>
+    <form action="{% url 'search' %}" method="get">
+        <input type="text" name="query">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+    {% if results %}
+        <!-- Display Search Results -->
+        <h1>Search Results</h1>
+        <ul>
+            {% for result in results %}
+                <li>
+                    <h3>{{ result.word }}</h3>
+                    <p>{{ result.definition }}</p>
+                    <p>Language of Origin: {{ result.origin_language }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+    <!-- Display "Add Word" form -->
+    <h2>Add a New Word</h2>
+    <form action="{% url 'add_word' %}" method="post">
+        {% csrf_token %}
+        {{ add_word_form|crispy }}
+        <button type="submit">Add Word</button>
+    </form>
 
 </div>
-    <!-- Rest of your page content -->
+
 </body>
 </html>
