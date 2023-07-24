@@ -4,55 +4,53 @@
 {% load custom_filters %}
 
 <html>
-<head>
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-
-<body>
-<!-- Display banner and header -->
-<div class="header">
-    <img src="{% static 'images/banner.jpg' %}" class="banner" alt="Page Banner">
-    <div class="hover-image">
-        <a href="{% url 'init' %}">
-            <img src="{% static 'images/logo.png' %}" class="logo" alt="Page Logo">
-        </a>
-        <form action="{% url 'search' %}" class="formSearch" method="get">
-            <input type="text" class="search" name="query" size="100">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-</div>
-
-<!-- Search dictionary -->
-<div>
-    <div>
-        {% if results %}
-            <!-- Display Search Results -->
-            <h1>Search Results</h1>
-            <ul>
-                {% for result in results %}
-                    <li>
-                        <h3>{{ result.word }}</h3>
-                        <p>{{ result.definition }}</p>
-                        <p>Language of Origin: {{ result.origin_language }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {% if request.path|split_url == "/search/" %}
-                <p>No results found.</p>
-            {% endif %}
-        {% endif %}
-    </div>
-    <!-- Display "Add Word" form -->
-    <h2>Add a New Word</h2>
-    <form action="{% url 'add_word' %}" method="post">
-        {% csrf_token %}
-        {{ add_word_form|crispy }}
-        <button type="submit">Add Word</button>
-    </form>
-</div>
-
-</body>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+    <!-- Display header -->
+        <div class="header">
+            <div class="hover-image">
+                <a href="{% url 'init' %}">
+                    <img src="{% static 'images/logo.png' %}" class="logo" alt="Page Logo">
+                </a>
+                <form action="{% url 'search' %}" class="formSearch" method="get">
+                    <input type="text" class="search" name="query" size="100">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <!-- Search dictionary -->
+        <div class="content">
+            <div class="items">
+                <div>
+                    {% if results %}
+                        <!-- Display Search Results -->
+                        <h1>Search Results</h1>
+                        <ul>
+                            {% for result in results %}
+                                <li>
+                                    <h3>{{ result.word }}</h3>
+                                    <p>{{ result.definition }}</p>
+                                    <p>Language of Origin: {{ result.origin_language }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        {% if request.path|split_url == "/search/" %}
+                            <p>No results found.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <!-- Display "Add Word" form -->
+                <h2>Add a New Word</h2>
+                <form action="{% url 'add_word' %}" method="post">
+                    {% csrf_token %}
+                    {{ add_word_form|crispy }}
+                    <button type="submit">Add Word</button>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

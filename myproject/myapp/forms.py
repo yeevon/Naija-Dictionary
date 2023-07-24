@@ -8,6 +8,9 @@ class AddWordForm(forms.ModelForm):
     class Meta:
         model = DictionaryEntry
         fields = ['word', 'definition', 'origin_language']
+        widgets = {
+            'word': forms.TextInput(attrs={'required': True}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

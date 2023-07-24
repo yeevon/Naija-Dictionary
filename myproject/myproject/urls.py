@@ -21,5 +21,6 @@ urlpatterns = [
     path('main/', hello, name='main'),
     path('init/', page_view, name='init'),
     path('search/', search_view, name='search'),
+    path('add-word/search/', search_view, name='search'),
     path('add-word/', add_word_view, name='add_word')
 ]

@@ -26,8 +26,11 @@ def add_word_view(request):
     if request.method == 'POST':
         form = AddWordForm(request.POST)
         if form.is_valid():
+            new_word = form.cleaned_data['word']
             form.save()
-            return redirect('init')
+            print(f"New Word: '{new_word}'")
+            if new_word.strip():
+                return redirect(f'search/?query={new_word}')
     else:
         form = AddWordForm()
 
